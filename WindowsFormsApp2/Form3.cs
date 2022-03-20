@@ -176,7 +176,7 @@ namespace WindowsFormsApp2
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void SortChartDataButton_Click(object sender, EventArgs e)
         {
             var startDate = dateTimePicker1.Value;
             var endDate = dateTimePicker2.Value;
