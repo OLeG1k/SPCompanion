@@ -95,7 +95,6 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 1;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label3
             // 
@@ -132,7 +131,6 @@
             this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(100, 20);
             this.textBox2.TabIndex = 7;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label5
             // 
@@ -142,7 +140,6 @@
             this.label5.Size = new System.Drawing.Size(86, 13);
             this.label5.TabIndex = 8;
             this.label5.Text = "Идеальный вес";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // textBox4
             // 
@@ -166,7 +163,6 @@
             this.label8.Size = new System.Drawing.Size(49, 13);
             this.label8.TabIndex = 14;
             this.label8.Text = "Возраст";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // label9
             // 
@@ -176,7 +172,6 @@
             this.label9.Size = new System.Drawing.Size(26, 13);
             this.label9.TabIndex = 15;
             this.label9.Text = "Вес";
-            this.label9.Click += new System.EventHandler(this.label9_Click);
             // 
             // textBox6
             // 
@@ -194,7 +189,6 @@
             this.label10.Size = new System.Drawing.Size(104, 13);
             this.label10.TabIndex = 18;
             this.label10.Text = "Норма ккал в день";
-            this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
             // label11
             // 
@@ -225,7 +219,7 @@
             this.label13.Size = new System.Drawing.Size(18, 13);
             this.label13.TabIndex = 22;
             this.label13.Text = "кг";
-            this.label13.Click += new System.EventHandler(this.label13_Click);
+            
             // 
             // button2
             // 
@@ -316,7 +310,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Физическая активность человека";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

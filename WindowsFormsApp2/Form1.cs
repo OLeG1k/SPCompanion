@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using SportCompanion.Core.Models;
+using SportCompanion.Core.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,17 +20,17 @@ namespace WindowsFormsApp2
             InitializeComponent();
             List<Person> people = new List<Person>
             {
-        new Person { Gender=Human.male, Name="Мужчина"},
-        new Person { Gender=Human.female, Name="Женщина"},
-        };
-         
+                new Person { Gender=Human.male, Name="Мужчина"},
+                new Person { Gender=Human.female, Name="Женщина"},
+            };
+
             comboBox1.DataSource = people;
             comboBox1.DisplayMember = "Name";
             comboBox1.ValueMember = "Gender";
         }
-    
- 
-    private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
@@ -85,7 +87,18 @@ namespace WindowsFormsApp2
                 textBox6.Text = Ccal_per_day.ToString();
                 DateTime dt = DateTime.Now;
                 string curDate = dt.ToShortDateString();
-                User ss = new User { Age = Age, Ccal_per_day = Ccal_per_day, Gender = comboBox1.Text, Height = Height, Ideal_weight = Ideal_weight, Weight = Weight, Date = curDate, Step = Step, Mark = Result };
+                User ss = new User 
+                { 
+                    Age = Age, 
+                    Ccal_per_day = Ccal_per_day, 
+                    Gender = comboBox1.Text, 
+                    Height = Height, 
+                    Ideal_weight = Ideal_weight, 
+                    Weight = Weight, 
+                    Date = curDate, 
+                    Step = Step, 
+                    Mark = Result 
+                };
                 //var mass = new List<User>();
                 //mass.Add(ss);
                 //Properties.Settings.Default.History = JsonConvert.SerializeObject(History);
@@ -93,7 +106,7 @@ namespace WindowsFormsApp2
                 string History_JSON = Properties.Settings.Default.History;
                 var Histories = JsonConvert.DeserializeObject<List<User>>(History_JSON);
                 int index = Histories.FindIndex((k) => k.Date == curDate);
-                if ( index == -1 )
+                if (index == -1)
                 {
                     Histories.Add(ss);
                 }
@@ -104,55 +117,10 @@ namespace WindowsFormsApp2
                 Properties.Settings.Default.History = JsonConvert.SerializeObject(Histories);
                 Properties.Settings.Default.Save();
             }
-            catch(FormatException)
+            catch (FormatException)
             {
                 MessageBox.Show("Данные заполнены некорректно!", "Ошибка");
             }
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label10_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label9_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label13_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -165,29 +133,5 @@ namespace WindowsFormsApp2
             Form2 History = new Form2();
             History.ShowDialog();
         }
-    }
-
-    class Person
-    {
-        public string Name { get; set; }
-        public Human Gender { get; set; }
-
-    }
-    public enum Human
-    {
-        male,
-        female
-    }
-    public class User
-    {
-        public string Gender { get; set; }
-        public double Height { get; set; }
-        public double Weight { get; set; }
-        public double Age { get; set; }
-        public double Ideal_weight { get; set; }
-        public double Ccal_per_day { get; set; }
-        public string Date { get; set; }
-        public int Step { get; set; }
-        public string Mark { get; set; }
     }
 }
