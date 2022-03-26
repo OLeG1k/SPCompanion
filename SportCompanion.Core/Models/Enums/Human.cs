@@ -2,7 +2,7 @@
 {
     public enum Human
     {
-        male,
-        female
+        Male,
+        Female
     }
 }

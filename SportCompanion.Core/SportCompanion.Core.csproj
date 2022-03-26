@@ -41,13 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActivityInfo.cs" />
+    <Compile Include="Models\ActivityInfo.cs" />
+    <Compile Include="Models\Color.cs" />
     <Compile Include="DataProcessor.cs" />
     <Compile Include="Models\Enums\Human.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StepInfo.cs" />
+    <Compile Include="Models\AppleStepInfo.cs" />
+    <Compile Include="Models\StepInfo.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

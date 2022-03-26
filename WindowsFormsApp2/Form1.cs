@@ -20,13 +20,13 @@ namespace WindowsFormsApp2
             InitializeComponent();
             List<Person> people = new List<Person>
             {
-                new Person { Gender=Human.male, Name="Мужчина"},
-                new Person { Gender=Human.female, Name="Женщина"},
+                new Person { Gender=Human.Male, Name="Мужчина"},
+                new Person { Gender=Human.Female, Name="Женщина"},
             };
 
             comboBox1.DataSource = people;
-            comboBox1.DisplayMember = "Name";
-            comboBox1.ValueMember = "Gender";
+            comboBox1.DisplayMember = nameof(Person.Name);
+            comboBox1.ValueMember = nameof(Person.Gender);
         }
 
 
@@ -69,7 +69,7 @@ namespace WindowsFormsApp2
                 }
                 textBox8.Text = Result;
 
-                if ((Human)comboBox1.SelectedValue == Human.male)
+                if ((Human)comboBox1.SelectedValue == Human.Male)
                 {
                     //мужчина
                     Ideal_weight = ((Height * 4 / 2.54 - 128) * 0.453);
@@ -125,6 +125,8 @@ namespace WindowsFormsApp2
 
         private void button2_Click(object sender, EventArgs e)
         {
+            AddChartDialog addChartDialog = new AddChartDialog();
+            addChartDialog.ShowDialog();
             MessageBox.Show("Автор программы:\n\nСтудент Тульского Государственного Педагогического Университета\nФакультета математики, физики и информатики\nГруппы 4В (120861)\nИванов Олег", "Об авторе");
         }
 

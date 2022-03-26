@@ -10,10 +10,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp2.Helpers;
 
 // TODO:
 // Единый формат файла после сохранения + сохранени json
-// Диалог добавления данных пользователя (с выбором цвета линии, имени легенды итд)
+// Диалог добавления данных пользователя (с выбором цвета линии, имени легенды итд) done[v]
 // крутилку на загрузку данных
 // Окно с результатами анализа (наиболее активный день, наименее активный день, среднее количество пройденных шагов)
 
@@ -22,6 +23,7 @@ namespace WindowsFormsApp2
     public partial class Form3 : Form
     {
         private readonly DataProcessor _dataProcessor;
+        private readonly List<ActivityInfo> _persons;
 
         public Form3(List<User> History)
         {
@@ -30,14 +32,16 @@ namespace WindowsFormsApp2
 
             openFileDialog1.Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*";
             saveFileDialog1.Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*";
-            chart1.Series["Series1"].LegendText = "Шаги";
-            chart1.Series["Series2"].LegendText = " ";
-            foreach (var item in History)
-            {
-                chart1.Series["Series1"].Points.AddXY(item.Date, item.Step);
-            }
+            
+            //chart1.Series["Series1"].LegendText = "Шаги";
+            //chart1.Series["Series2"].LegendText = " ";
+            //foreach (var item in History)
+            //{
+            //    chart1.Series["Series1"].Points.AddXY(item.Date, item.Step);
+            //}
 
             _dataProcessor = new DataProcessor();
+            _persons = new List<ActivityInfo>();
         }
 
         //Массивы для хранения
@@ -152,28 +156,73 @@ namespace WindowsFormsApp2
         {
             if (ImportAppleHealthFileDialog.ShowDialog() == DialogResult.OK)
             {
-                var path = ImportAppleHealthFileDialog.FileName;
-                var data = _dataProcessor.Import(path);
-
-                var s1 = chart1.Series.FindByName("s1");
-                
-                if (s1 == default)
+                try
                 {
-                    s1 = chart1.Series.Add("s1");
-                    s1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+                    var path = ImportAppleHealthFileDialog.FileName;
+                    var data = _dataProcessor.Import(path);
+
+
+                    AddChartDialog addChartDialog = new AddChartDialog();
+                    if (addChartDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        var person = addChartDialog.DialogResultData;
+                        person.Steps = data;
+
+                        _persons.Add(person);
+
+                        var series = CreateSeries(person);
+
+                        ResetFilter();
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    s1.Points.Clear();
-                }
-
-                s1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-
-                foreach (var item in data)
-                {
-                    s1.Points.AddXY(item.Key, item.Value);
+                    MessageBox.Show(ex.Message, "Ошибка импорта", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void ResetFilter()
+        {
+            foreach (var person in _persons)
+            {
+                var series = GetSeries(person);
+                if (series != null)
+                {
+                    series.Points.Clear();
+                    FillSeries(series, person.Steps);
+                }
+            }
+        }
+
+        private void ResetFilterButton_Click(object sender, EventArgs e)
+        {
+            ResetFilter();
+        }
+
+        private void FillSeries(System.Windows.Forms.DataVisualization.Charting.Series series, IEnumerable<StepInfo> steps)
+        {
+            foreach (var item in steps)
+            {
+                series.Points.AddXY(item.Date, item.Value);
+            }
+        }
+
+        private System.Windows.Forms.DataVisualization.Charting.Series CreateSeries(ActivityInfo person)
+        {
+            string seriesName = person.Id.ToString();
+            var series = chart1.Series.FindByName(seriesName);
+
+            if (series == default)
+            {
+                series = chart1.Series.Add(seriesName);
+                series.Color = Helpers.ColorConverter.ToDrawingColor(person.Color);
+                series.LegendText = person.Name;
+                series.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+                series.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            }
+
+            return series;
         }
 
         private void SortChartDataButton_Click(object sender, EventArgs e)
@@ -181,22 +230,22 @@ namespace WindowsFormsApp2
             var startDate = dateTimePicker1.Value;
             var endDate = dateTimePicker2.Value;
 
-            var s1 = chart1.Series.FindByName("s1");
-            if (s1 != default)
+            foreach (var person in _persons)
             {
-                var points = s1.Points.Where(p =>
+                var series = GetSeries(person);
+                if (series != default)
                 {
-                    var date = DateTime.FromOADate(p.XValue);
-                    return date >= startDate && date <= endDate;
-                }).ToList();
+                    series.Points.Clear();
+                    var steps = person.Steps.Where(s => s.Date >= startDate && s.Date <= endDate).ToList();
 
-                s1.Points.Clear();
-
-                foreach (var item in points)
-                {
-                    s1.Points.AddXY(item.XValue, item.YValues.First());
+                    FillSeries(series, steps);
                 }
             }
+        }
+
+        private System.Windows.Forms.DataVisualization.Charting.Series GetSeries(ActivityInfo person)
+        {
+            return chart1.Series.FindByName(person.Id.ToString());
         }
     }
 }

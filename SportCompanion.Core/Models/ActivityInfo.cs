@@ -1,12 +1,14 @@
 ﻿using SportCompanion.Core.Models.Enums;
+using System;
 using System.Collections.Generic;
 
-namespace SportCompanion.Core
+namespace SportCompanion.Core.Models
 {
     public class ActivityInfo
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Color { get; set; }
+        public Color Color { get; set; }
         public int Age { get; set; }
         public double Height { get; set; }
         public double Weight { get; set; }

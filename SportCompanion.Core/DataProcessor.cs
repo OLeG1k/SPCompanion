@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportCompanion.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -14,56 +15,31 @@ namespace SportCompanion.Core
         private const string APPLE_RECORD_NODE = "Record";
         private const string APPLE_STEP_IDENTIFIER = "HKQuantityTypeIdentifierStepCount";
 
-        public Dictionary<DateTime, int> Import(string path)
+        public List<StepInfo> Import(string path)
         {
-            List<StepInfo> stepInfoList = ReadFile(path);
-            var data = Prepare(stepInfoList);
+            List<AppleStepInfo> stepInfoList = ReadFile(path);
+            var data = Aggregate(stepInfoList);
 
             return data;
         }
 
-        private List<StepInfo> ReadFile(string path)
+        private List<AppleStepInfo> ReadFile(string path)
         {
-            var stepInfoList = new List<StepInfo>();
+            var stepInfoList = new List<AppleStepInfo>();
             var reader = XmlReader.Create(path, new XmlReaderSettings() { Async = true, DtdProcessing = DtdProcessing.Parse });
             using (reader)
             {
                 if (reader.ReadToFollowing(APPLE_MAIN_NODE))
                 {
-                    var locale = reader.GetAttribute("locale");
-
-                    CultureInfo culture;
-                    try
-                    {
-                        culture = CultureInfo.GetCultureInfo(locale);
-                    }
-                    catch (CultureNotFoundException ex)
-                    {
-                        culture = CultureInfo.CurrentCulture;
-                    }
+                    CultureInfo culture = GetCulture(reader);
 
                     while (reader.ReadToFollowing(APPLE_RECORD_NODE))
                     {
-                        var type = reader.GetAttribute("type");
-                        if (type == APPLE_STEP_IDENTIFIER)
+                        var stepInfo = ReadRecordNode(stepInfoList, reader, culture);
+
+                        if (stepInfo != null)
                         {
-                            var startDateAttr = reader.GetAttribute("startDate");
-                            var endDateAttr = reader.GetAttribute("endDate");
-                            var valueAttr = reader.GetAttribute("value");
-
-                            if (DateTime.TryParse(startDateAttr, culture, DateTimeStyles.None, out var startDate)
-                                && DateTime.TryParse(endDateAttr, culture, DateTimeStyles.None, out var endDate)
-                                && int.TryParse(valueAttr, out var value))
-                            {
-                                var stepInfo = new StepInfo()
-                                {
-                                    StartDate = startDate,
-                                    EndDate = endDate,
-                                    Value = value
-                                };
-
-                                stepInfoList.Add(stepInfo);
-                            }
+                            stepInfoList.Add(stepInfo);
                         }
                     }
                 }
@@ -76,13 +52,59 @@ namespace SportCompanion.Core
             return stepInfoList;
         }
 
-        private Dictionary<DateTime, int> Prepare(List<StepInfo> stepInfoList)
+        private AppleStepInfo ReadRecordNode(List<AppleStepInfo> stepInfoList, XmlReader reader, CultureInfo culture)
         {
-            Dictionary<DateTime, int> stepsByDate = stepInfoList.GroupBy(s => s.CalculatedDate)
-                .OrderBy(g => g.Key)
-                .ToDictionary(g => g.Key, g => g.Sum(z => z.Value));
+            AppleStepInfo info = null;
 
-            return stepsByDate;
+            var type = reader.GetAttribute("type");
+            if (type == APPLE_STEP_IDENTIFIER)
+            {
+                var startDateAttr = reader.GetAttribute("startDate");
+                var endDateAttr = reader.GetAttribute("endDate");
+                var valueAttr = reader.GetAttribute("value");
+
+                if (DateTime.TryParse(startDateAttr, culture, DateTimeStyles.None, out var startDate)
+                    && DateTime.TryParse(endDateAttr, culture, DateTimeStyles.None, out var endDate)
+                    && int.TryParse(valueAttr, out var value))
+                {
+                    info = new AppleStepInfo()
+                    {
+                        StartDate = startDate,
+                        EndDate = endDate,
+                        Value = value
+                    };
+                }
+            }
+
+            return info;
+        }
+
+        private CultureInfo GetCulture(XmlReader reader)
+        {
+
+            var locale = reader.GetAttribute("locale");
+
+            CultureInfo culture;
+            try
+            {
+                culture = CultureInfo.GetCultureInfo(locale);
+            }
+            catch (CultureNotFoundException ex)
+            {
+                culture = CultureInfo.CurrentCulture;
+            }
+
+            return culture;
+        }
+
+        private List<StepInfo> Aggregate(List<AppleStepInfo> stepInfoList)
+        {
+            List<StepInfo> steps = stepInfoList.GroupBy(s => s.CalculatedDate)
+                .OrderBy(g => g.Key)
+                .Select(g => new StepInfo { Date = g.Key, Value = g.Sum(z => z.Value) } )
+                .ToList();
+
+            return steps;
         }
     }
 }
