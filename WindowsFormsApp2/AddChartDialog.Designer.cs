@@ -197,7 +197,7 @@ namespace WindowsFormsApp2
             this.Controls.Add(this.ChangeColorButton);
             this.Controls.Add(this.AddChartButton);
             this.Name = "AddChartDialog";
-            this.Text = "AddChartDialog";
+            this.Text = "Импорт данных";
             ((System.ComponentModel.ISupportInitialize)(this.ChartPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

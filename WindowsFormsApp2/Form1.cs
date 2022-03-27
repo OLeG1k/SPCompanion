@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using SportCompanion.Core;
 using SportCompanion.Core.Models;
 using SportCompanion.Core.Models.Enums;
 using System;
@@ -15,6 +15,7 @@ namespace WindowsFormsApp2
 {
     public partial class Form1 : Form
     {
+        private readonly AnalyzeProcessor _analyzeProcessor;
         public Form1()
         {
             InitializeComponent();
@@ -27,6 +28,8 @@ namespace WindowsFormsApp2
             comboBox1.DataSource = people;
             comboBox1.DisplayMember = nameof(Person.Name);
             comboBox1.ValueMember = nameof(Person.Gender);
+
+            _analyzeProcessor = new AnalyzeProcessor();
         }
 
 
@@ -39,83 +42,65 @@ namespace WindowsFormsApp2
         {
             try
             {
-                int Age = Convert.ToInt32(textBox5.Text);
-                double Ideal_weight = 0;
-                double Height = Convert.ToDouble(textBox1.Text);
-                double Weight = Convert.ToDouble(textBox4.Text);
-                double Ccal_per_day = 0;
-                int Step = Convert.ToInt32(textBox3.Text);
-                string Result = "";
-                if (Step < 2500)
-                {
-                    Result = "Очень плохая активность";
+                int age = Convert.ToInt32(textBox5.Text);
+               
+                double height = Convert.ToDouble(textBox1.Text);
+                double weight = Convert.ToDouble(textBox4.Text);
 
-                }
-                else if (Step < 5000)
-                {
-                    Result = "Плохая активность";
-                }
-                else if (Step < 7500)
-                {
-                    Result = "Нормальная активность";
-                }
-                else if (Step < 10000)
-                {
-                    Result = "Отличная активность";
-                }
-                else
-                {
-                    Result = "Потрясающая активность!";
-                }
-                textBox8.Text = Result;
+                int step = Convert.ToInt32(textBox3.Text);
+                var gender = (Human)comboBox1.SelectedValue;
 
-                if ((Human)comboBox1.SelectedValue == Human.Male)
+                var activityInfo = new ActivityInfo
                 {
-                    //мужчина
-                    Ideal_weight = ((Height * 4 / 2.54 - 128) * 0.453);
-                    Ccal_per_day = (66 + 13.7 * Weight + 5 * Height - 6.76 * Age);
-                }
-                else
-                {
-                    //женщина
-                    Ideal_weight = ((Height * 3.5 / 2.54 - 108) * 0.453);
-                    Ccal_per_day = (655 + 9.6 * Weight + 1.8 * Height - 4.7 * Age);
-                }
-                Ideal_weight = Math.Round(Ideal_weight, 2);
-                Ccal_per_day = Math.Round(Ccal_per_day, 2);
-                textBox2.Text = Ideal_weight.ToString();
-                textBox6.Text = Ccal_per_day.ToString();
-                DateTime dt = DateTime.Now;
-                string curDate = dt.ToShortDateString();
-                User ss = new User 
-                { 
-                    Age = Age, 
-                    Ccal_per_day = Ccal_per_day, 
-                    Gender = comboBox1.Text, 
-                    Height = Height, 
-                    Ideal_weight = Ideal_weight, 
-                    Weight = Weight, 
-                    Date = curDate, 
-                    Step = Step, 
-                    Mark = Result 
+                    Age = age,
+                    Gender = gender,
+                    Height = height,
+                    Weight = weight
                 };
-                //var mass = new List<User>();
-                //mass.Add(ss);
-                //Properties.Settings.Default.History = JsonConvert.SerializeObject(History);
+
+                double idealWeight = _analyzeProcessor.CalculateIdealWeight(activityInfo);
+                double kkalPerDay = _analyzeProcessor.CalculateRecommendKkalPerDay(activityInfo);
+                string mark = _analyzeProcessor.AnalyzeSteps(step).Label;
+
+                idealWeight = Math.Round(idealWeight, 2);
+                kkalPerDay = Math.Round(kkalPerDay, 2);
+
+
+                textBox8.Text = mark;
+                textBox2.Text = idealWeight.ToString();
+                textBox6.Text = kkalPerDay.ToString();
+
+                //DateTime dt = DateTime.Now;
+                //string curDate = dt.ToShortDateString();
+                //User ss = new User 
+                //{ 
+                //    Age = age, 
+                //    Ccal_per_day = kkalPerDay, 
+                //    Gender = comboBox1.Text, 
+                //    Height = height, 
+                //    Ideal_weight = idealWeight, 
+                //    Weight = weight, 
+                //    Date = curDate, 
+                //    Step = step, 
+                //    Mark = mark 
+                //};
+                ////var mass = new List<User>();
+                ////mass.Add(ss);
+                ////Properties.Settings.Default.History = JsonConvert.SerializeObject(History);
+                ////Properties.Settings.Default.Save();
+                //string History_JSON = Properties.Settings.Default.History;
+                //var Histories = JsonConvert.DeserializeObject<List<User>>(History_JSON);
+                //int index = Histories.FindIndex((k) => k.Date == curDate);
+                //if (index == -1)
+                //{
+                //    Histories.Add(ss);
+                //}
+                //else
+                //{
+                //    Histories[index] = ss;
+                //}
+                //Properties.Settings.Default.History = JsonConvert.SerializeObject(Histories);
                 //Properties.Settings.Default.Save();
-                string History_JSON = Properties.Settings.Default.History;
-                var Histories = JsonConvert.DeserializeObject<List<User>>(History_JSON);
-                int index = Histories.FindIndex((k) => k.Date == curDate);
-                if (index == -1)
-                {
-                    Histories.Add(ss);
-                }
-                else
-                {
-                    Histories[index] = ss;
-                }
-                Properties.Settings.Default.History = JsonConvert.SerializeObject(Histories);
-                Properties.Settings.Default.Save();
             }
             catch (FormatException)
             {
@@ -132,7 +117,7 @@ namespace WindowsFormsApp2
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Form2 History = new Form2();
+            Form3 History = new Form3();
             History.ShowDialog();
         }
     }

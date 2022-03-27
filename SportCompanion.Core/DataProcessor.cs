@@ -1,7 +1,9 @@
-﻿using SportCompanion.Core.Models;
+﻿using Newtonsoft.Json;
+using SportCompanion.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +23,41 @@ namespace SportCompanion.Core
             var data = Aggregate(stepInfoList);
 
             return data;
+        }
+
+        public List<ActivityInfo> LoadData(string path)
+        {
+            if (!File.Exists(path))
+            {
+                return null;
+            }
+
+            try
+            {
+                var json = File.ReadAllText(path, Encoding.UTF8);
+                return JsonConvert.DeserializeObject<List<ActivityInfo>>(json);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Во время загрузки данных произошла ошибка.", ex);
+            }
+        }
+
+        public void SaveData(string path, List<ActivityInfo> activityInfos)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(activityInfos);
+                using (var fs = System.IO.File.Create(path))
+                {
+                    byte[] info = new UTF8Encoding().GetBytes(json);
+                    fs.Write(info, 0, info.Length);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Не удалось сохранить файл", ex);
+            }
         }
 
         private List<AppleStepInfo> ReadFile(string path)

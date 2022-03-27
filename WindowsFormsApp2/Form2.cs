@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using SportCompanion.Core.Models;
+﻿using SportCompanion.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,7 +18,7 @@ namespace WindowsFormsApp2
         {
             InitializeComponent();
             string dd = Properties.Settings.Default.History;
-            History = JsonConvert.DeserializeObject<List<User>>(dd);
+            //History = JsonConvert.DeserializeObject<List<User>>(dd);
             foreach (User item in History)
             {
                 string asd = new StringBuilder ( $"Дата - {item.Date} \r\n Пол - {item.Gender}   Возраст - {item.Age} лет   Рост - {item.Height} см   Вес - {item.Weight} кг   Идеальный вес - {item.Ideal_weight} кг   Норма ккал в день - {item.Ccal_per_day} ккал   Шаги - {item.Step}   \n Оценка физической активности - \"{item.Mark}\"\r\n \r\n").ToString();
@@ -41,8 +40,8 @@ namespace WindowsFormsApp2
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form3 Graphic = new Form3(History);
-            Graphic.ShowDialog();
+            //Form3 Graphic = new Form3(History);
+            //Graphic.ShowDialog();
         }
     }
 }

@@ -14,5 +14,10 @@ namespace SportCompanion.Core.Models
         public double Weight { get; set; }
         public Human Gender { get; set; }
         public List<StepInfo> Steps { get; set; }
+
+        public string GetGenderText()
+        {
+            return Gender == Human.Male ? "Мужчина" : "Женщина";
+        }
     }
 }

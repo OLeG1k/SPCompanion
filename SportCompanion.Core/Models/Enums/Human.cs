@@ -2,7 +2,14 @@
 {
     public enum Human
     {
+        /// <summary>
+        /// Мужчина
+        /// </summary>
         Male,
+
+        /// <summary>
+        /// Женщина
+        /// </summary>
         Female
     }
 }

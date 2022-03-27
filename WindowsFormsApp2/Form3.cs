@@ -15,32 +15,52 @@ using WindowsFormsApp2.Helpers;
 // TODO:
 // Единый формат файла после сохранения + сохранени json
 // Диалог добавления данных пользователя (с выбором цвета линии, имени легенды итд) done[v]
-// крутилку на загрузку данных
-// Окно с результатами анализа (наиболее активный день, наименее активный день, среднее количество пройденных шагов)
+// Окно с результатами анализа (наиболее активный день, наименее активный день, среднее количество пройденных шагов) done[v]
+
+/*
+Общая инофрмация
+    Среднее количество шагов в день
+    Примерно пройденная дистанция с учётом роста человека
+    Норма ккал в день
+    Оценка активности
+    Рассчитанный идеальный вес + относительность
+    Максимальное/минимальное кол-во шагов
+
+
+Наиболее (наименее) активный день 
+    Дата
+    Количество шагов
+    Процент прибавки относительно среднего количества шагов
+ 
+Процент выполнения 
+ 
+ активность по проценту
+ 
+ */
 
 namespace WindowsFormsApp2
 {
     public partial class Form3 : Form
     {
         private readonly DataProcessor _dataProcessor;
+        private readonly AnalyzeProcessor _analyzeProcessor;
         private readonly List<ActivityInfo> _persons;
 
-        public Form3(List<User> History)
+        public Form3()
         {
             InitializeComponent();
             ImportAppleHealthFileDialog.Filter = "Xml files(*.xml)|*.xml|All files(*.*)|*.*";
 
-            openFileDialog1.Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*";
-            saveFileDialog1.Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*";
+            openFileDialog1.FileName = "data.json";
+            openFileDialog1.Filter = "Json files(*.json)|*.json|All files(*.*)|*.*";
             
-            //chart1.Series["Series1"].LegendText = "Шаги";
-            //chart1.Series["Series2"].LegendText = " ";
-            //foreach (var item in History)
-            //{
-            //    chart1.Series["Series1"].Points.AddXY(item.Date, item.Step);
-            //}
+            saveFileDialog1.FileName = "data.json";
+            saveFileDialog1.Filter = "Json files(*.json)|*.json|All files(*.*)|*.*";
+            
+            MainChart.Series.Clear();
 
             _dataProcessor = new DataProcessor();
+            _analyzeProcessor = new AnalyzeProcessor();
             _persons = new List<ActivityInfo>();
         }
 
@@ -48,66 +68,56 @@ namespace WindowsFormsApp2
         List<string> x;
         List<int> y;
         int[] a;
-        private void ОткрытьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    //Инициализация массивов
-                    x = new List<string>();
-                    y = new List<int>();
-
-                    //Чтение файла и запись значений в List x и y
-                    StreamReader sr = new StreamReader(openFileDialog1.FileName);
-                    string line;
-                    string[] line2;
-                    while ((line = sr.ReadLine()) != null)
+                    var data = _dataProcessor.LoadData(openFileDialog1.FileName);
+                    if (data == null)
                     {
-                        line2 = line.Split(','); //разбиваем строку на подстроки
-                        x.Add(Convert.ToString(line2[0]));
-                        y.Add(Convert.ToInt32(line2[1]));
+                        throw new ApplicationException("Файл не найден");
                     }
-                    sr.Close();
 
-                    //Заполняем график считанными значениями
-                    chart1.Series["Series1"].Points.Clear();
-                    chart1.Series["Series2"].Points.Clear();
-                    chart1.Series["Series1"].LegendText = "Шаги из файла";
-                    chart1.Series["Series2"].LegendText = " ";
-                    for (int i = 0; i < x.Count; i++)
+                    _persons.Clear();
+                    _persons.AddRange(data);
+
+                    MainChart.Series.Clear();
+                    foreach (var person in _persons)
                     {
-                        chart1.Series["Series1"].Points.AddXY(x[i], y[i]);
+                        var series = CreateSeries(person);
+                        ResetFilter();
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Некорректные данные!\n\nПример ввода:\nдата,кол-во шагов\nдата,кол-во шагов\nдата,кол-во шагов", "Ошибка ввода");
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
-        private void СохранитьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
-                return;
-            // получаем выбранный файл
-            string filename = saveFileDialog1.FileName;
-            //Начинаем запись в файл
-            StreamWriter sw = new StreamWriter(filename);
-            foreach (int val in a)
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string path = saveFileDialog1.FileName;
 
-                sw.WriteLine(val);
-            sw.Close();
-            MessageBox.Show("Файл сохранен");
+                    _dataProcessor.SaveData(path, _persons);
+
+                    MessageBox.Show("Файл успешно сохранен");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                
+            }
         }
 
-        private void файлToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void закрытьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -135,14 +145,14 @@ namespace WindowsFormsApp2
                     sr.Close();
 
                     //Заполняем график считанными значениями
-                    chart1.Series["Series1"].Points.Clear();
-                    chart1.Series["Series2"].Points.Clear();
-                    chart1.Series["Series1"].LegendText = "Шаги 1-го участника";
-                    chart1.Series["Series2"].LegendText = "Шаги 2-го участника";
+                    MainChart.Series["Series1"].Points.Clear();
+                    MainChart.Series["Series2"].Points.Clear();
+                    MainChart.Series["Series1"].LegendText = "Шаги 1-го участника";
+                    MainChart.Series["Series2"].LegendText = "Шаги 2-го участника";
                     for (int i = 0; i < x.Count - 1; i += 2)
                     {
-                        chart1.Series["Series1"].Points.AddXY(x[i], y[i]);
-                        chart1.Series["Series2"].Points.AddXY(x[i + 1], y[i + 1]);
+                        MainChart.Series["Series1"].Points.AddXY(x[i], y[i]);
+                        MainChart.Series["Series2"].Points.AddXY(x[i + 1], y[i + 1]);
                     }
                 }
                 catch (Exception ex)
@@ -211,11 +221,11 @@ namespace WindowsFormsApp2
         private System.Windows.Forms.DataVisualization.Charting.Series CreateSeries(ActivityInfo person)
         {
             string seriesName = person.Id.ToString();
-            var series = chart1.Series.FindByName(seriesName);
+            var series = MainChart.Series.FindByName(seriesName);
 
             if (series == default)
             {
-                series = chart1.Series.Add(seriesName);
+                series = MainChart.Series.Add(seriesName);
                 series.Color = Helpers.ColorConverter.ToDrawingColor(person.Color);
                 series.LegendText = person.Name;
                 series.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
@@ -245,7 +255,20 @@ namespace WindowsFormsApp2
 
         private System.Windows.Forms.DataVisualization.Charting.Series GetSeries(ActivityInfo person)
         {
-            return chart1.Series.FindByName(person.Id.ToString());
+            return MainChart.Series.FindByName(person.Id.ToString());
+        }
+
+        private void AnalyzeButton_Click(object sender, EventArgs e)
+        {
+            var result = new List<AnalyzeResult>();
+            foreach (var person in _persons)
+            {
+                var res = _analyzeProcessor.Analyze(person);
+                result.Add(res);
+            }
+
+            AnalyzeForm analyzeForm = new AnalyzeForm(result);
+            analyzeForm.ShowDialog();
         }
     }
 }
