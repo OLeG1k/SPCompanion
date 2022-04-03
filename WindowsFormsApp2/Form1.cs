@@ -117,7 +117,7 @@ namespace WindowsFormsApp2
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Form3 History = new Form3();
+            MainForm History = new MainForm();
             History.ShowDialog();
         }
     }

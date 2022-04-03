@@ -40,13 +40,13 @@ using WindowsFormsApp2.Helpers;
 
 namespace WindowsFormsApp2
 {
-    public partial class Form3 : Form
+    public partial class MainForm : Form
     {
         private readonly DataProcessor _dataProcessor;
         private readonly AnalyzeProcessor _analyzeProcessor;
         private readonly List<ActivityInfo> _persons;
 
-        public Form3()
+        public MainForm()
         {
             InitializeComponent();
             ImportAppleHealthFileDialog.Filter = "Xml files(*.xml)|*.xml|All files(*.*)|*.*";
@@ -237,8 +237,8 @@ namespace WindowsFormsApp2
 
         private void SortChartDataButton_Click(object sender, EventArgs e)
         {
-            var startDate = dateTimePicker1.Value;
-            var endDate = dateTimePicker2.Value;
+            var startDate = DateInputFrom.Value;
+            var endDate = DateInputTo.Value;
 
             foreach (var person in _persons)
             {
@@ -260,6 +260,12 @@ namespace WindowsFormsApp2
 
         private void AnalyzeButton_Click(object sender, EventArgs e)
         {
+            if (!_persons.Any())
+            {
+                MessageBox.Show("Отсутствуют данные", "Операция невозможна", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             var result = new List<AnalyzeResult>();
             foreach (var person in _persons)
             {
