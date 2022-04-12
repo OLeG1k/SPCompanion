@@ -78,230 +78,230 @@ namespace WindowsFormsApp2
             // UserName
             // 
             this.UserName.AutoSize = true;
-            this.UserName.Font = new System.Drawing.Font("Lucida Sans", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UserName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UserName.Location = new System.Drawing.Point(12, 9);
             this.UserName.Name = "UserName";
-            this.UserName.Size = new System.Drawing.Size(111, 32);
+            this.UserName.Size = new System.Drawing.Size(108, 31);
             this.UserName.TabIndex = 1;
             this.UserName.Text = "<ИМЯ>";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(12, 49);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 18);
+            this.label2.Size = new System.Drawing.Size(85, 20);
             this.label2.TabIndex = 2;
             this.label2.Text = "Возвраст:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(12, 106);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(44, 18);
+            this.label3.Size = new System.Drawing.Size(49, 20);
             this.label3.TabIndex = 3;
             this.label3.Text = "Рост:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(12, 139);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(37, 18);
+            this.label4.Size = new System.Drawing.Size(41, 20);
             this.label4.TabIndex = 4;
             this.label4.Text = "Вес:";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(12, 172);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(115, 18);
+            this.label5.Size = new System.Drawing.Size(131, 20);
             this.label5.TabIndex = 5;
             this.label5.Text = "Идеальный вес:";
             // 
             // Age
             // 
             this.Age.AutoSize = true;
-            this.Age.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Age.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Age.Location = new System.Drawing.Point(178, 49);
             this.Age.Name = "Age";
-            this.Age.Size = new System.Drawing.Size(89, 18);
+            this.Age.Size = new System.Drawing.Size(99, 20);
             this.Age.TabIndex = 6;
             this.Age.Text = "<Возвраст>";
             // 
             // UserHeight
             // 
             this.UserHeight.AutoSize = true;
-            this.UserHeight.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UserHeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UserHeight.Location = new System.Drawing.Point(178, 106);
             this.UserHeight.Name = "UserHeight";
-            this.UserHeight.Size = new System.Drawing.Size(59, 18);
+            this.UserHeight.Size = new System.Drawing.Size(63, 20);
             this.UserHeight.TabIndex = 7;
             this.UserHeight.Text = "<Рост>";
             // 
             // Weight
             // 
             this.Weight.AutoSize = true;
-            this.Weight.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Weight.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Weight.Location = new System.Drawing.Point(178, 139);
             this.Weight.Name = "Weight";
-            this.Weight.Size = new System.Drawing.Size(52, 18);
+            this.Weight.Size = new System.Drawing.Size(55, 20);
             this.Weight.TabIndex = 8;
             this.Weight.Text = "<Вес>";
             // 
             // IdealWeight
             // 
             this.IdealWeight.AutoSize = true;
-            this.IdealWeight.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.IdealWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.IdealWeight.Location = new System.Drawing.Point(178, 172);
             this.IdealWeight.Name = "IdealWeight";
-            this.IdealWeight.Size = new System.Drawing.Size(130, 18);
+            this.IdealWeight.Size = new System.Drawing.Size(145, 20);
             this.IdealWeight.TabIndex = 9;
             this.IdealWeight.Text = "<Идеальный вес>";
             // 
             // MinSteps
             // 
             this.MinSteps.AutoSize = true;
-            this.MinSteps.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MinSteps.Location = new System.Drawing.Point(289, 366);
+            this.MinSteps.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinSteps.Location = new System.Drawing.Point(318, 381);
             this.MinSteps.Name = "MinSteps";
-            this.MinSteps.Size = new System.Drawing.Size(54, 18);
+            this.MinSteps.Size = new System.Drawing.Size(58, 20);
             this.MinSteps.TabIndex = 15;
             this.MinSteps.Text = "<Пол>";
             // 
             // MaxSteps
             // 
             this.MaxSteps.AutoSize = true;
-            this.MaxSteps.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MaxSteps.Location = new System.Drawing.Point(289, 342);
+            this.MaxSteps.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MaxSteps.Location = new System.Drawing.Point(318, 352);
             this.MaxSteps.Name = "MaxSteps";
-            this.MaxSteps.Size = new System.Drawing.Size(52, 18);
+            this.MaxSteps.Size = new System.Drawing.Size(55, 20);
             this.MaxSteps.TabIndex = 14;
             this.MaxSteps.Text = "<Вес>";
             // 
             // AverageSteps
             // 
             this.AverageSteps.AutoSize = true;
-            this.AverageSteps.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AverageSteps.Location = new System.Drawing.Point(289, 318);
+            this.AverageSteps.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AverageSteps.Location = new System.Drawing.Point(318, 322);
             this.AverageSteps.Name = "AverageSteps";
-            this.AverageSteps.Size = new System.Drawing.Size(59, 18);
+            this.AverageSteps.Size = new System.Drawing.Size(63, 20);
             this.AverageSteps.TabIndex = 13;
             this.AverageSteps.Text = "<Рост>";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(12, 366);
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(12, 381);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(252, 18);
+            this.label13.Size = new System.Drawing.Size(287, 20);
             this.label13.TabIndex = 12;
             this.label13.Text = "Минимальное кол-во шагов за день:";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(12, 342);
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(12, 352);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(258, 18);
+            this.label14.Size = new System.Drawing.Size(294, 20);
             this.label14.TabIndex = 11;
             this.label14.Text = "Максимальное кол-во шагов за день:";
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(12, 318);
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(12, 322);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(210, 18);
+            this.label15.Size = new System.Drawing.Size(240, 20);
             this.label15.TabIndex = 10;
             this.label15.Text = "Среднее кол-во шагов в день:";
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.Location = new System.Drawing.Point(12, 201);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(139, 18);
+            this.label16.Size = new System.Drawing.Size(157, 20);
             this.label16.TabIndex = 12;
             this.label16.Text = "Норма ккал в день:";
             // 
             // KkalPerDay
             // 
             this.KkalPerDay.AutoSize = true;
-            this.KkalPerDay.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.KkalPerDay.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.KkalPerDay.Location = new System.Drawing.Point(178, 201);
             this.KkalPerDay.Name = "KkalPerDay";
-            this.KkalPerDay.Size = new System.Drawing.Size(154, 18);
+            this.KkalPerDay.Size = new System.Drawing.Size(171, 20);
             this.KkalPerDay.TabIndex = 15;
             this.KkalPerDay.Text = "<Норма ккал в день>";
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label18.Location = new System.Drawing.Point(12, 262);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(143, 18);
+            this.label18.Size = new System.Drawing.Size(161, 20);
             this.label18.TabIndex = 12;
             this.label18.Text = "Оценка активности:";
             // 
             // MarkActivity
             // 
             this.MarkActivity.AutoSize = true;
-            this.MarkActivity.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MarkActivity.Location = new System.Drawing.Point(289, 262);
+            this.MarkActivity.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MarkActivity.Location = new System.Drawing.Point(318, 262);
             this.MarkActivity.Name = "MarkActivity";
-            this.MarkActivity.Size = new System.Drawing.Size(158, 18);
+            this.MarkActivity.Size = new System.Drawing.Size(175, 20);
             this.MarkActivity.TabIndex = 15;
             this.MarkActivity.Text = "<Оценка активности>";
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label20.Location = new System.Drawing.Point(12, 78);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(39, 18);
+            this.label20.Size = new System.Drawing.Size(44, 20);
             this.label20.TabIndex = 5;
             this.label20.Text = "Пол:";
             // 
             // Gender
             // 
             this.Gender.AutoSize = true;
-            this.Gender.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Gender.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Gender.Location = new System.Drawing.Point(178, 78);
             this.Gender.Name = "Gender";
-            this.Gender.Size = new System.Drawing.Size(54, 18);
+            this.Gender.Size = new System.Drawing.Size(58, 20);
             this.Gender.TabIndex = 9;
             this.Gender.Text = "<Пол>";
             // 
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.Location = new System.Drawing.Point(15, 289);
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(12, 289);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(151, 18);
+            this.label22.Size = new System.Drawing.Size(170, 20);
             this.label22.TabIndex = 12;
             this.label22.Text = "Общее кол-во шагов:";
             // 
             // TotalSteps
             // 
             this.TotalSteps.AutoSize = true;
-            this.TotalSteps.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TotalSteps.Location = new System.Drawing.Point(289, 289);
+            this.TotalSteps.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TotalSteps.Location = new System.Drawing.Point(318, 289);
             this.TotalSteps.Name = "TotalSteps";
-            this.TotalSteps.Size = new System.Drawing.Size(54, 18);
+            this.TotalSteps.Size = new System.Drawing.Size(58, 20);
             this.TotalSteps.TabIndex = 15;
             this.TotalSteps.Text = "<Пол>";
             // 
@@ -335,10 +335,10 @@ namespace WindowsFormsApp2
             // PercentageOfIdealWeight
             // 
             this.PercentageOfIdealWeight.AutoSize = true;
-            this.PercentageOfIdealWeight.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PercentageOfIdealWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PercentageOfIdealWeight.Location = new System.Drawing.Point(241, 139);
             this.PercentageOfIdealWeight.Name = "PercentageOfIdealWeight";
-            this.PercentageOfIdealWeight.Size = new System.Drawing.Size(71, 18);
+            this.PercentageOfIdealWeight.Size = new System.Drawing.Size(77, 20);
             this.PercentageOfIdealWeight.TabIndex = 8;
             this.PercentageOfIdealWeight.Text = "<Вес, %>";
             // 
@@ -347,10 +347,10 @@ namespace WindowsFormsApp2
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Lucida Sans", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(415, 220);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(126, 27);
+            this.label1.Size = new System.Drawing.Size(146, 29);
             this.label1.TabIndex = 17;
             this.label1.Text = "Активность";
             // 

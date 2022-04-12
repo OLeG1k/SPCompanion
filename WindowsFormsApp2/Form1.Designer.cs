@@ -83,11 +83,11 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(231, 22);
+            this.label2.Location = new System.Drawing.Point(224, 22);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(372, 37);
+            this.label2.Size = new System.Drawing.Size(398, 37);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Физическая активность";
+            this.label2.Text = "Двигательная активность";
             // 
             // textBox1
             // 
@@ -219,7 +219,6 @@
             this.label13.Size = new System.Drawing.Size(18, 13);
             this.label13.TabIndex = 22;
             this.label13.Text = "кг";
-            
             // 
             // button2
             // 
