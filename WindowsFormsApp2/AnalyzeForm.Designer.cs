@@ -34,6 +34,7 @@ namespace WindowsFormsApp2
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 100D);
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 66D);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnalyzeForm));
             this.UserComboBox = new System.Windows.Forms.ComboBox();
             this.UserName = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -387,6 +388,7 @@ namespace WindowsFormsApp2
             this.Controls.Add(this.label2);
             this.Controls.Add(this.UserName);
             this.Controls.Add(this.UserComboBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AnalyzeForm";
             this.Text = "Анализ";
             ((System.ComponentModel.ISupportInitialize)(this.ActivityPie)).EndInit();

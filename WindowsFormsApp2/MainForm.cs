@@ -276,5 +276,10 @@ namespace WindowsFormsApp2
             AnalyzeForm analyzeForm = new AnalyzeForm(result);
             analyzeForm.ShowDialog();
         }
+
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Автор программы:\n\nСтудент Тульского Государственного Педагогического Университета\nФакультета математики, физики и информатики\nГруппы 2ИС (181001)\nИванов Олег", "Об авторе");
+        }
     }
 }
