@@ -51,6 +51,7 @@
             this.AnalyzeButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.MainChart)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -103,6 +104,7 @@
             this.toolStripMenuItem1,
             this.toolStripMenuItem2,
             this.импортToolStripMenuItem,
+            this.toolStripMenuItem3,
             this.закрытьToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
@@ -111,28 +113,28 @@
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(133, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem1.Text = "Открыть";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.OpenFileToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(133, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem2.Text = "Сохранить";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.SaveAsToolStripMenuItem_Click);
             // 
             // импортToolStripMenuItem
             // 
             this.импортToolStripMenuItem.Name = "импортToolStripMenuItem";
-            this.импортToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.импортToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.импортToolStripMenuItem.Text = "Импорт";
             this.импортToolStripMenuItem.Click += new System.EventHandler(this.ImportBtn_Click);
             // 
             // закрытьToolStripMenuItem
             // 
             this.закрытьToolStripMenuItem.Name = "закрытьToolStripMenuItem";
-            this.закрытьToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.закрытьToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.закрытьToolStripMenuItem.Text = "Закрыть";
             this.закрытьToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItem_Click);
             // 
@@ -151,7 +153,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ApplyFilterButton.BackColor = System.Drawing.Color.White;
             this.ApplyFilterButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.ApplyFilterButton.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ApplyFilterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ApplyFilterButton.Location = new System.Drawing.Point(9, 75);
             this.ApplyFilterButton.Name = "ApplyFilterButton";
             this.ApplyFilterButton.Size = new System.Drawing.Size(158, 48);
@@ -185,7 +187,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ResetFilterButton.BackColor = System.Drawing.Color.Coral;
             this.ResetFilterButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.ResetFilterButton.Font = new System.Drawing.Font("Lucida Sans", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResetFilterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ResetFilterButton.Location = new System.Drawing.Point(9, 129);
             this.ResetFilterButton.Name = "ResetFilterButton";
             this.ResetFilterButton.Size = new System.Drawing.Size(158, 35);
@@ -200,7 +202,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.AnalyzeButton.BackColor = System.Drawing.Color.White;
             this.AnalyzeButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.AnalyzeButton.Font = new System.Drawing.Font("Lucida Sans", 14.25F);
+            this.AnalyzeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
             this.AnalyzeButton.Location = new System.Drawing.Point(9, 378);
             this.AnalyzeButton.Name = "AnalyzeButton";
             this.AnalyzeButton.Size = new System.Drawing.Size(158, 33);
@@ -238,7 +240,14 @@
             this.panel1.Size = new System.Drawing.Size(176, 420);
             this.panel1.TabIndex = 1;
             // 
-            // Form3
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem3.Text = "О программе";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -248,7 +257,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form3";
+            this.Name = "MainForm";
             this.Text = "Графики";
             ((System.ComponentModel.ISupportInitialize)(this.MainChart)).EndInit();
             this.menuStrip1.ResumeLayout(false);
@@ -280,5 +289,6 @@
         private System.Windows.Forms.Button AnalyzeButton;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
     }
 }
