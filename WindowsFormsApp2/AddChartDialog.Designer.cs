@@ -46,6 +46,8 @@ namespace WindowsFormsApp2
             this.CancelButton = new System.Windows.Forms.Button();
             this.GenderComboBox = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.GoalComboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.ChartPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,7 +58,7 @@ namespace WindowsFormsApp2
             this.AddChartButton.BackColor = System.Drawing.Color.White;
             this.AddChartButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.AddChartButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddChartButton.Location = new System.Drawing.Point(12, 450);
+            this.AddChartButton.Location = new System.Drawing.Point(12, 547);
             this.AddChartButton.Name = "AddChartButton";
             this.AddChartButton.Size = new System.Drawing.Size(147, 37);
             this.AddChartButton.TabIndex = 0;
@@ -183,7 +185,7 @@ namespace WindowsFormsApp2
             this.CancelButton.BackColor = System.Drawing.Color.Coral;
             this.CancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.CancelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CancelButton.Location = new System.Drawing.Point(161, 450);
+            this.CancelButton.Location = new System.Drawing.Point(161, 547);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(90, 37);
             this.CancelButton.TabIndex = 13;
@@ -212,12 +214,36 @@ namespace WindowsFormsApp2
             this.label6.TabIndex = 2;
             this.label6.Text = "Пол";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.label7.Location = new System.Drawing.Point(8, 446);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(54, 24);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "Цель";
+            // 
+            // GoalComboBox
+            // 
+            this.GoalComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.GoalComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.GoalComboBox.FormattingEnabled = true;
+            this.GoalComboBox.Location = new System.Drawing.Point(12, 473);
+            this.GoalComboBox.Name = "GoalComboBox";
+            this.GoalComboBox.Size = new System.Drawing.Size(239, 32);
+            this.GoalComboBox.TabIndex = 17;
+            // 
             // AddChartDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(263, 499);
+            this.ClientSize = new System.Drawing.Size(263, 596);
+            this.Controls.Add(this.GoalComboBox);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.AddChartButton);
             this.Controls.Add(this.GenderComboBox);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.ChartPictureBox);
@@ -232,7 +258,6 @@ namespace WindowsFormsApp2
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ChangeColorButton);
-            this.Controls.Add(this.AddChartButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AddChartDialog";
             this.Text = "Импорт данных";
@@ -260,5 +285,7 @@ namespace WindowsFormsApp2
         private System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.ComboBox GenderComboBox;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox GoalComboBox;
     }
 }

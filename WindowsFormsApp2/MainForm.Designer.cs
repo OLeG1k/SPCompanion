@@ -39,11 +39,11 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.импортToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.закрытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
-            this.ApplyFilterButton = new System.Windows.Forms.Button();
             this.DateInputFrom = new System.Windows.Forms.DateTimePicker();
             this.DateInputTo = new System.Windows.Forms.DateTimePicker();
             this.ImportAppleHealthFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -51,7 +51,9 @@
             this.AnalyzeButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.IsFilterEnabled = new System.Windows.Forms.CheckBox();
+            this.заВсёВремяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.заМесяцToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.MainChart)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -126,10 +128,19 @@
             // 
             // импортToolStripMenuItem
             // 
+            this.импортToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.заВсёВремяToolStripMenuItem,
+            this.заМесяцToolStripMenuItem});
             this.импортToolStripMenuItem.Name = "импортToolStripMenuItem";
             this.импортToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.импортToolStripMenuItem.Text = "Импорт";
-            this.импортToolStripMenuItem.Click += new System.EventHandler(this.ImportBtn_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem3.Text = "О программе";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // закрытьToolStripMenuItem
             // 
@@ -147,21 +158,6 @@
             // 
             this.saveFileDialog1.DefaultExt = "json";
             // 
-            // ApplyFilterButton
-            // 
-            this.ApplyFilterButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ApplyFilterButton.BackColor = System.Drawing.Color.White;
-            this.ApplyFilterButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.ApplyFilterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ApplyFilterButton.Location = new System.Drawing.Point(9, 75);
-            this.ApplyFilterButton.Name = "ApplyFilterButton";
-            this.ApplyFilterButton.Size = new System.Drawing.Size(158, 48);
-            this.ApplyFilterButton.TabIndex = 2;
-            this.ApplyFilterButton.Text = "Применить фильтр";
-            this.ApplyFilterButton.UseVisualStyleBackColor = false;
-            this.ApplyFilterButton.Click += new System.EventHandler(this.SortChartDataButton_Click);
-            // 
             // DateInputFrom
             // 
             this.DateInputFrom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -170,6 +166,7 @@
             this.DateInputFrom.Name = "DateInputFrom";
             this.DateInputFrom.Size = new System.Drawing.Size(158, 20);
             this.DateInputFrom.TabIndex = 3;
+            this.DateInputFrom.ValueChanged += new System.EventHandler(this.DateInputFrom_ValueChanged);
             // 
             // DateInputTo
             // 
@@ -180,6 +177,7 @@
             this.DateInputTo.Name = "DateInputTo";
             this.DateInputTo.Size = new System.Drawing.Size(158, 20);
             this.DateInputTo.TabIndex = 4;
+            this.DateInputTo.ValueChanged += new System.EventHandler(this.DateInputTo_ValueChanged);
             // 
             // ResetFilterButton
             // 
@@ -188,7 +186,7 @@
             this.ResetFilterButton.BackColor = System.Drawing.Color.Coral;
             this.ResetFilterButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.ResetFilterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ResetFilterButton.Location = new System.Drawing.Point(9, 129);
+            this.ResetFilterButton.Location = new System.Drawing.Point(9, 93);
             this.ResetFilterButton.Name = "ResetFilterButton";
             this.ResetFilterButton.Size = new System.Drawing.Size(158, 35);
             this.ResetFilterButton.TabIndex = 5;
@@ -229,23 +227,42 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.IsFilterEnabled);
             this.panel1.Controls.Add(this.DateInputFrom);
             this.panel1.Controls.Add(this.AnalyzeButton);
             this.panel1.Controls.Add(this.ResetFilterButton);
             this.panel1.Controls.Add(this.DateInputTo);
-            this.panel1.Controls.Add(this.ApplyFilterButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(729, 3);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(176, 420);
             this.panel1.TabIndex = 1;
             // 
-            // toolStripMenuItem3
+            // IsFilterEnabled
             // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItem3.Text = "О программе";
-            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
+            this.IsFilterEnabled.AutoSize = true;
+            this.IsFilterEnabled.Enabled = false;
+            this.IsFilterEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.IsFilterEnabled.Location = new System.Drawing.Point(9, 67);
+            this.IsFilterEnabled.Name = "IsFilterEnabled";
+            this.IsFilterEnabled.Size = new System.Drawing.Size(144, 20);
+            this.IsFilterEnabled.TabIndex = 7;
+            this.IsFilterEnabled.Text = "Фильтр применён";
+            this.IsFilterEnabled.UseVisualStyleBackColor = true;
+            // 
+            // заВсёВремяToolStripMenuItem
+            // 
+            this.заВсёВремяToolStripMenuItem.Name = "заВсёВремяToolStripMenuItem";
+            this.заВсёВремяToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.заВсёВремяToolStripMenuItem.Text = "За всё время";
+            this.заВсёВремяToolStripMenuItem.Click += new System.EventHandler(this.ImportBtn_Click);
+            // 
+            // заМесяцToolStripMenuItem
+            // 
+            this.заМесяцToolStripMenuItem.Name = "заМесяцToolStripMenuItem";
+            this.заМесяцToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.заМесяцToolStripMenuItem.Text = "За месяц";
+            this.заМесяцToolStripMenuItem.Click += new System.EventHandler(this.ImportLastMonthBtn_Click);
             // 
             // MainForm
             // 
@@ -264,6 +281,7 @@
             this.menuStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -281,7 +299,6 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog2;
         private System.Windows.Forms.ToolStripMenuItem закрытьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem импортToolStripMenuItem;
-        private System.Windows.Forms.Button ApplyFilterButton;
         private System.Windows.Forms.DateTimePicker DateInputFrom;
         private System.Windows.Forms.DateTimePicker DateInputTo;
         private System.Windows.Forms.OpenFileDialog ImportAppleHealthFileDialog;
@@ -290,5 +307,8 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.CheckBox IsFilterEnabled;
+        private System.Windows.Forms.ToolStripMenuItem заВсёВремяToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem заМесяцToolStripMenuItem;
     }
 }

@@ -1,6 +1,5 @@
 ﻿using SportCompanion.Core.Models.Enums;
 using System;
-using System.Collections.Generic;
 
 namespace SportCompanion.Core.Models
 {
@@ -13,11 +12,32 @@ namespace SportCompanion.Core.Models
         public double Height { get; set; }
         public double Weight { get; set; }
         public Human Gender { get; set; }
-        public List<StepInfo> Steps { get; set; }
+        public Goal Goal { get; set; }
+        public StepInfoCollection Steps { get; set; }
+        public EnergyInfoCollection Energy { get; set; }
 
         public string GetGenderText()
         {
             return Gender == Human.Male ? "Мужчина" : "Женщина";
+        }
+
+        public string GetGoalText()
+        {
+            string text;
+            switch (Goal)
+            {
+                case Goal.Lose:
+                    text = "Похудеть";
+                    break;
+                case Goal.Keep:
+                    text = "Поддержать вес";
+                    break;
+                default:
+                    text = "<Неизвестна>";
+                    break;
+            }
+
+            return text;
         }
     }
 }

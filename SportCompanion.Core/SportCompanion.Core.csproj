@@ -49,14 +49,22 @@
     <Compile Include="Models\AnalyzeStepsResult.cs" />
     <Compile Include="Models\ActivityInfo.cs" />
     <Compile Include="Models\AnalyzeResult.cs" />
+    <Compile Include="Models\Apple\AppleEnergyInfo.cs" />
+    <Compile Include="Models\Apple\AppleRecordInfo.cs" />
+    <Compile Include="Models\Apple\ReadAppleFileResult.cs" />
     <Compile Include="Models\Color.cs" />
     <Compile Include="DataProcessor.cs" />
+    <Compile Include="Models\EnergyInfo.cs" />
+    <Compile Include="Models\EnergyInfoCollection.cs" />
+    <Compile Include="Models\Enums\Goal.cs" />
     <Compile Include="Models\Enums\Human.cs" />
-    <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\ImportResult.cs" />
+    <Compile Include="Models\StepInfoCollection.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\AppleStepInfo.cs" />
+    <Compile Include="Models\Apple\AppleStepInfo.cs" />
     <Compile Include="Models\StepInfo.cs" />
+    <Compile Include="SuggestProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

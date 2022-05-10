@@ -12,32 +12,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp2.Helpers;
 
-// TODO:
-// Единый формат файла после сохранения + сохранени json
-// Диалог добавления данных пользователя (с выбором цвета линии, имени легенды итд) done[v]
-// Окно с результатами анализа (наиболее активный день, наименее активный день, среднее количество пройденных шагов) done[v]
-
-/*
-Общая инофрмация
-    Среднее количество шагов в день
-    Примерно пройденная дистанция с учётом роста человека
-    Норма ккал в день
-    Оценка активности
-    Рассчитанный идеальный вес + относительность
-    Максимальное/минимальное кол-во шагов
-
-
-Наиболее (наименее) активный день 
-    Дата
-    Количество шагов
-    Процент прибавки относительно среднего количества шагов
- 
-Процент выполнения 
- 
- активность по проценту
- 
- */
-
 namespace WindowsFormsApp2
 {
     public partial class MainForm : Form
@@ -64,10 +38,6 @@ namespace WindowsFormsApp2
             _persons = new List<ActivityInfo>();
         }
 
-        //Массивы для хранения
-        List<string> x;
-        List<int> y;
-        int[] a;
         private void OpenFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -87,8 +57,8 @@ namespace WindowsFormsApp2
                     foreach (var person in _persons)
                     {
                         var series = CreateSeries(person);
-                        ResetFilter();
                     }
+                    ApplyLast7DaysFilter();
                 }
                 catch (Exception ex)
                 {
@@ -122,67 +92,38 @@ namespace WindowsFormsApp2
             this.Close();
         }
 
-        private void режимСравненияToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void ImportBtn_Click(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    //Инициализация массивов
-                    x = new List<string>();
-                    y = new List<int>();
-
-                    //Чтение файла и запись значений в List x и y
-                    StreamReader sr = new StreamReader(openFileDialog1.FileName);
-                    string line;
-                    string[] line2;
-                    while ((line = sr.ReadLine()) != null)
-                    {
-                        line2 = line.Split(','); //разбиваем строку на подстроки
-                        x.Add(Convert.ToString(line2[0]));
-                        y.Add(Convert.ToInt32(line2[1]));
-                    }
-                    sr.Close();
-
-                    //Заполняем график считанными значениями
-                    MainChart.Series["Series1"].Points.Clear();
-                    MainChart.Series["Series2"].Points.Clear();
-                    MainChart.Series["Series1"].LegendText = "Шаги 1-го участника";
-                    MainChart.Series["Series2"].LegendText = "Шаги 2-го участника";
-                    for (int i = 0; i < x.Count - 1; i += 2)
-                    {
-                        MainChart.Series["Series1"].Points.AddXY(x[i], y[i]);
-                        MainChart.Series["Series2"].Points.AddXY(x[i + 1], y[i + 1]);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Некорректные данные!\n\nПример ввода:\n(1-ый участник)дата,кол-во шагов\n(2-ой участник)дата,кол-во шагов\n(1-ый участник)дата,кол-во шагов\n(2-ой участник)дата,кол-во шагов", "Ошибка ввода");
-                }
-            }
+            Import();
+        }
+        private void ImportLastMonthBtn_Click(object sender, EventArgs e)
+        {
+            var limit = DateTime.Today.AddMonths(-1);
+            Import(limit);
         }
 
-        private void ImportBtn_Click(object sender, EventArgs e)
+        private void Import(DateTime? limit = null)
         {
             if (ImportAppleHealthFileDialog.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
                     var path = ImportAppleHealthFileDialog.FileName;
-                    var data = _dataProcessor.Import(path);
+                    var data = _dataProcessor.Import(path, limit);
 
 
                     AddChartDialog addChartDialog = new AddChartDialog();
                     if (addChartDialog.ShowDialog() == DialogResult.OK)
                     {
                         var person = addChartDialog.DialogResultData;
-                        person.Steps = data;
+                        person.Steps = data.Steps;
+                        person.Energy = data.Energy;
 
                         _persons.Add(person);
 
                         var series = CreateSeries(person);
 
-                        ResetFilter();
+                        ApplyLast7DaysFilter();
                     }
                 }
                 catch (Exception ex)
@@ -190,6 +131,17 @@ namespace WindowsFormsApp2
                     MessageBox.Show(ex.Message, "Ошибка импорта", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void ApplyLast7DaysFilter()
+        {
+            var startDate = DateTime.Today.AddDays(-7);
+            DateInputFrom.Value = startDate;
+
+            var endDate = DateTime.Today.AddDays(1).AddSeconds(-1);
+            DateInputTo.Value = endDate;
+
+            ApplyFilter(startDate, endDate);
         }
 
         private void ResetFilter()
@@ -203,6 +155,22 @@ namespace WindowsFormsApp2
                     FillSeries(series, person.Steps);
                 }
             }
+
+            try
+            {
+                var startDate = _persons.Min(a => a.Steps.MinDate);
+                var endDate = _persons.Max(a => a.Steps.MaxDate);
+
+                DateInputFrom.Value = startDate ?? DateTime.Today;
+                DateInputTo.Value = endDate ?? DateTime.Today;
+            }
+            catch (Exception ex)
+            {
+                DateInputFrom.Value = DateTime.Today;
+                DateInputTo.Value = DateTime.Today;
+            }
+
+            IsFilterEnabled.Checked = false;
         }
 
         private void ResetFilterButton_Click(object sender, EventArgs e)
@@ -235,11 +203,8 @@ namespace WindowsFormsApp2
             return series;
         }
 
-        private void SortChartDataButton_Click(object sender, EventArgs e)
+        private void ApplyFilter(DateTime startDate, DateTime endDate)
         {
-            var startDate = DateInputFrom.Value;
-            var endDate = DateInputTo.Value;
-
             foreach (var person in _persons)
             {
                 var series = GetSeries(person);
@@ -251,6 +216,8 @@ namespace WindowsFormsApp2
                     FillSeries(series, steps);
                 }
             }
+
+            IsFilterEnabled.Checked = true;
         }
 
         private System.Windows.Forms.DataVisualization.Charting.Series GetSeries(ActivityInfo person)
@@ -266,10 +233,13 @@ namespace WindowsFormsApp2
                 return;
             }
 
+            var startDate = DateInputFrom.Value;
+            var endDate = DateInputTo.Value;
+
             var result = new List<AnalyzeResult>();
             foreach (var person in _persons)
             {
-                var res = _analyzeProcessor.Analyze(person);
+                var res = _analyzeProcessor.Analyze(person, startDate, endDate);
                 result.Add(res);
             }
 
@@ -280,6 +250,22 @@ namespace WindowsFormsApp2
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
             MessageBox.Show("SPCompanion\nВерсия 1.0\n\nАвтор программы:\nСтудент ТГПУ им. Л.Н. Толстого\nФакультета математики, физики и информатики\nГруппы 2ИС (181001)\nИванов Олег\n\n2020-2022©", "О программе");
+        }
+
+        private void DateInputTo_ValueChanged(object sender, EventArgs e)
+        {
+            var startDate = DateInputFrom.Value;
+            var endDate = DateInputTo.Value;
+
+            ApplyFilter(startDate, endDate);
+        }
+
+        private void DateInputFrom_ValueChanged(object sender, EventArgs e)
+        {
+            var startDate = DateInputFrom.Value;
+            var endDate = DateInputTo.Value;
+
+            ApplyFilter(startDate, endDate);
         }
     }
 }

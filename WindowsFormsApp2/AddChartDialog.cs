@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp2.Helpers;
+using WindowsFormsApp2.Models;
 
 namespace WindowsFormsApp2
 {
@@ -20,20 +21,39 @@ namespace WindowsFormsApp2
         public AddChartDialog()
         {
             InitializeComponent();
-            InitComboBox();
+            InitComboBoxes();
         }
 
-        private void InitComboBox()
+        private void InitComboBoxes()
         {
-            List<Person> people = new List<Person>
+            InitGenderComboBox();
+            InitGoalComboBox();
+        }
+
+        private void InitGenderComboBox()
+        {
+            List<GenderSelector> people = new List<GenderSelector>
             {
-                new Person { Gender = Human.Male, Name = "Мужчина" },
-                new Person { Gender = Human.Female, Name = "Женщина" },
+                new GenderSelector { Gender = Human.Male, Name = "Мужчина" },
+                new GenderSelector { Gender = Human.Female, Name = "Женщина" },
             };
 
             GenderComboBox.DataSource = people;
-            GenderComboBox.DisplayMember = nameof(Person.Name);
-            GenderComboBox.ValueMember = nameof(Person.Gender);
+            GenderComboBox.DisplayMember = nameof(GenderSelector.Name);
+            GenderComboBox.ValueMember = nameof(GenderSelector.Gender);
+        }
+
+        private void InitGoalComboBox()
+        {
+            List<GoalSelector> people = new List<GoalSelector>
+            {
+                new GoalSelector { Goal = Goal.Lose, Name = "Похудеть" },
+                new GoalSelector { Goal = Goal.Keep, Name = "Поддерживать вес" },
+            };
+
+            GoalComboBox.DataSource = people;
+            GoalComboBox.DisplayMember = nameof(GoalSelector.Name);
+            GoalComboBox.ValueMember = nameof(GoalSelector.Goal);
         }
 
         private void ChangeColorButton_Click(object sender, EventArgs e)
@@ -54,8 +74,9 @@ namespace WindowsFormsApp2
                 var weight = GetWeight();
                 var color = GetColor();
                 var gender = GetGender();
+                var goal = GetGoal();
 
-                DialogResultData = new ActivityInfo
+                this.DialogResultData = new ActivityInfo
                 {
                     Id = Guid.NewGuid(),
                     Name = name,
@@ -63,7 +84,8 @@ namespace WindowsFormsApp2
                     Height = height,
                     Weight = weight,
                     Color = color,
-                    Gender = gender
+                    Gender = gender,
+                    Goal = goal
                 };
 
                 this.DialogResult = DialogResult.OK;
@@ -75,6 +97,19 @@ namespace WindowsFormsApp2
             }
         }
 
+        private Goal GetGoal()
+        {
+            var item = GoalComboBox.SelectedItem;
+            if (item == default)
+            {
+                throw new ApplicationException("Не указана цель");
+            }
+
+            var goalSelector = (GoalSelector)item;
+
+            return goalSelector.Goal;
+        }
+
         private Human GetGender()
         {
             var item = GenderComboBox.SelectedItem;
@@ -83,9 +118,9 @@ namespace WindowsFormsApp2
                 throw new ApplicationException("Не указан пол");
             }
 
-            var person = (Person)item;
+            var genderSelector = (GenderSelector)item;
 
-            return person.Gender;
+            return genderSelector.Gender;
         }
 
         private SportCompanion.Core.Models.Color GetColor()

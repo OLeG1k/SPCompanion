@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SportCompanion.Core.Models;
+using SportCompanion.Core.Models.Apple;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -16,11 +17,12 @@ namespace SportCompanion.Core
         private const string APPLE_MAIN_NODE = "HealthData";
         private const string APPLE_RECORD_NODE = "Record";
         private const string APPLE_STEP_IDENTIFIER = "HKQuantityTypeIdentifierStepCount";
+        private const string APPLE_ENERGY_IDENTIFIER = "HKQuantityTypeIdentifierBasalEnergyBurned";
 
-        public List<StepInfo> Import(string path)
+        public ImportResult Import(string path, DateTime? limit)
         {
-            List<AppleStepInfo> stepInfoList = ReadFile(path);
-            var data = Aggregate(stepInfoList);
+            var readResult = ReadFile(path, limit);
+            var data = Aggregate(readResult);
 
             return data;
         }
@@ -60,23 +62,34 @@ namespace SportCompanion.Core
             }
         }
 
-        private List<AppleStepInfo> ReadFile(string path)
+        private ReadAppleFileResult ReadFile(string path, DateTime? limit)
         {
-            var stepInfoList = new List<AppleStepInfo>();
+            var result = new ReadAppleFileResult()
+            {
+                Steps = new List<AppleStepInfo>(),
+                Energy = new List<AppleEnergyInfo>()
+            };
+            
             var reader = XmlReader.Create(path, new XmlReaderSettings() { Async = true, DtdProcessing = DtdProcessing.Parse });
             using (reader)
             {
                 if (reader.ReadToFollowing(APPLE_MAIN_NODE))
                 {
                     CultureInfo culture = GetCulture(reader);
-
                     while (reader.ReadToFollowing(APPLE_RECORD_NODE))
                     {
-                        var stepInfo = ReadRecordNode(stepInfoList, reader, culture);
-
+                        var stepInfo = ReadRecordStepNode(reader, culture, limit);
                         if (stepInfo != null)
                         {
-                            stepInfoList.Add(stepInfo);
+                            result.Steps.Add(stepInfo);
+                        }
+                        else
+                        {
+                            var energyInfo = ReadRecordEnergyNode(reader, culture, limit);
+                            if (energyInfo != null)
+                            {
+                                result.Energy.Add(energyInfo);
+                            }
                         }
                     }
                 }
@@ -86,10 +99,10 @@ namespace SportCompanion.Core
                 }
             }
 
-            return stepInfoList;
+            return result;
         }
 
-        private AppleStepInfo ReadRecordNode(List<AppleStepInfo> stepInfoList, XmlReader reader, CultureInfo culture)
+        private AppleStepInfo ReadRecordStepNode(XmlReader reader, CultureInfo culture, DateTime? limit)
         {
             AppleStepInfo info = null;
 
@@ -97,19 +110,59 @@ namespace SportCompanion.Core
             if (type == APPLE_STEP_IDENTIFIER)
             {
                 var startDateAttr = reader.GetAttribute("startDate");
+
+                if (DateTime.TryParse(startDateAttr, culture, DateTimeStyles.None, out var startDate) && (!limit.HasValue || startDate >= limit.Value))
+                {
+                    var endDateAttr = reader.GetAttribute("endDate");
+                    var valueAttr = reader.GetAttribute("value");
+
+                    if (DateTime.TryParse(endDateAttr, culture, DateTimeStyles.None, out var endDate)
+                        && int.TryParse(valueAttr, out var value))
+                    {
+                        info = new AppleStepInfo()
+                        {
+                            StartDate = startDate,
+                            EndDate = endDate,
+                            Value = value
+                        };
+                    }
+                }
+            }
+
+            return info;
+        }
+
+        private AppleEnergyInfo ReadRecordEnergyNode(XmlReader reader, CultureInfo culture, DateTime? limit)
+        {
+            AppleEnergyInfo info = null;
+
+            var type = reader.GetAttribute("type");
+            if (type == APPLE_ENERGY_IDENTIFIER)
+            {
+                var startDateAttr = reader.GetAttribute("startDate");
+
+                if (!DateTime.TryParse(startDateAttr, culture, DateTimeStyles.None, out var startDate) || startDate <= limit)
+                {
+                    return null;
+                }
+
                 var endDateAttr = reader.GetAttribute("endDate");
                 var valueAttr = reader.GetAttribute("value");
+                var unitAttr = reader.GetAttribute("unit") ?? string.Empty;
 
-                if (DateTime.TryParse(startDateAttr, culture, DateTimeStyles.None, out var startDate)
+                if (unitAttr.Equals("kcal")
                     && DateTime.TryParse(endDateAttr, culture, DateTimeStyles.None, out var endDate)
-                    && int.TryParse(valueAttr, out var value))
+                    && (double.TryParse(valueAttr,  NumberStyles.Any, culture, out var value)
+                        || double.TryParse(valueAttr,  NumberStyles.Any, CultureInfo.InvariantCulture, out value))
+                    )
                 {
-                    info = new AppleStepInfo()
+                    
+                    info = new AppleEnergyInfo()
                     {
                         StartDate = startDate,
                         EndDate = endDate,
                         Value = value
-                    };
+                    };                    
                 }
             }
 
@@ -134,14 +187,25 @@ namespace SportCompanion.Core
             return culture;
         }
 
-        private List<StepInfo> Aggregate(List<AppleStepInfo> stepInfoList)
+        private ImportResult Aggregate(ReadAppleFileResult readResult)
         {
-            List<StepInfo> steps = stepInfoList.GroupBy(s => s.CalculatedDate)
+            List<StepInfo> steps = readResult.Steps.GroupBy(s => s.CalculatedDate)
                 .OrderBy(g => g.Key)
                 .Select(g => new StepInfo { Date = g.Key, Value = g.Sum(z => z.Value) } )
                 .ToList();
 
-            return steps;
+            List<EnergyInfo> energy = readResult.Energy.GroupBy(s => s.CalculatedDate)
+                .OrderBy(g => g.Key)
+                .Select(g => new EnergyInfo { Date = g.Key, Value = g.Sum(z => z.Value) } )
+                .ToList();
+
+            ImportResult result = new ImportResult()
+            {
+                Steps = new StepInfoCollection(steps),
+                Energy = new EnergyInfoCollection(energy)
+            };
+
+            return result;
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using SportCompanion.Core.Models.Enums;
 
-namespace SportCompanion.Core.Models
+namespace WindowsFormsApp2.Models
 {
-    public class Person
+    internal class GenderSelector
     {
         public string Name { get; set; }
         public Human Gender { get; set; }

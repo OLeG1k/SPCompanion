@@ -38,6 +38,8 @@ namespace WindowsFormsApp2
             Age.Text = analyzeResult.ActivityInfo.Age.ToString("N0");
             UserHeight.Text = analyzeResult.ActivityInfo.Height.ToString("N2");
             Gender.Text = analyzeResult.ActivityInfo.GetGenderText();
+            Goal.Text = analyzeResult.ActivityInfo.GetGoalText();
+            Recommendations.Text = analyzeResult.Recommendations;
             Weight.Text = analyzeResult.ActivityInfo.Weight.ToString("N2");
             IdealWeight.Text = analyzeResult.IdealWeight.ToString("N1");
             
@@ -45,6 +47,11 @@ namespace WindowsFormsApp2
             MaxSteps.Text = analyzeResult.MaxSteps.ToString("N0");
             MinSteps.Text = analyzeResult.MinSteps.ToString("N0");
             TotalSteps.Text = analyzeResult.TotalSteps.ToString("N0");
+
+            AverageKcal.Text = analyzeResult.AverageKcal.ToString("N2");
+            MaxKcal.Text = analyzeResult.MaxKcal.ToString("N2");
+            MinKcal.Text = analyzeResult.MinKcal.ToString("N2");
+            TotalKcal.Text = analyzeResult.TotalKcal.ToString("N2");
             
             MarkActivity.Text = analyzeResult.MarkActivity.Label;
             KkalPerDay.Text = analyzeResult.KkalPerDay.ToString("N0");

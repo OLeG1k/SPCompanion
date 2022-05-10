@@ -15,5 +15,10 @@ namespace SportCompanion.Core.Models
         public AnalyzeStepsResult MarkActivity { get; set; }
         public Dictionary<AnalyzeStepsResult, int> StepsByStatus { get; set; }
         public int TotalSteps { get; set; }
+        public string Recommendations { get; set; }
+        public double MinKcal { get; set; }
+        public double MaxKcal { get; set; }
+        public double AverageKcal { get; set; }
+        public double TotalKcal { get; set; }
     }
 }

@@ -7,19 +7,47 @@ namespace SportCompanion.Core
 {
     public class AnalyzeProcessor
     {
-        public AnalyzeResult Analyze(ActivityInfo activityInfo)
+        private readonly SuggestProcessor _suggestProcessor;
+
+        public AnalyzeProcessor()
+        {
+            _suggestProcessor = new SuggestProcessor();
+        }
+
+
+        private bool CheckDate(DateTime date, DateTime? startDate, DateTime? endDate)
+        {
+            return (!startDate.HasValue || date.Date >= startDate) && (!endDate.HasValue || date.Date <= endDate);
+        }
+
+        public AnalyzeResult Analyze(ActivityInfo activityInfo, DateTime? startDate = null, DateTime? endDate = null)
         {
             var result = new AnalyzeResult
             { 
                 ActivityInfo = activityInfo
             };
 
-            result.TotalSteps = activityInfo.Steps.Sum(s => s.Value);
-            result.MaxSteps = activityInfo.Steps.Max(s => s.Value);
-            result.MinSteps = activityInfo.Steps.Min(s => s.Value);
+            var steps = activityInfo.Steps.Where(s => CheckDate(s.Date, startDate, endDate)).ToList();
+            if (steps.Any())
+            {
+                result.TotalSteps = steps.Sum(s => s.Value);
+                result.MaxSteps = steps.Max(s => s.Value);
+                result.MinSteps = steps.Min(s => s.Value);
 
-            var averageSteps = activityInfo.Steps.Average(s => s.Value);
-            result.AverageSteps = Convert.ToInt32(averageSteps);
+                var averageSteps = steps.Average(s => s.Value);
+                result.AverageSteps = Convert.ToInt32(averageSteps);
+            }
+
+            var energy = activityInfo.Energy.Where(s => CheckDate(s.Date, startDate, endDate)).ToList();
+            if (energy.Any())
+            {
+                result.TotalKcal = energy.Sum(s => s.Value);
+                result.MaxKcal = energy.Max(s => s.Value);
+                result.MinKcal = energy.Min(s => s.Value);
+
+                var averageKcal = energy.Average(s => s.Value);
+                result.AverageKcal = Convert.ToInt32(averageKcal);
+            }            
 
             result.MarkActivity = AnalyzeSteps(result.AverageSteps);
 
@@ -30,9 +58,11 @@ namespace SportCompanion.Core
 
             result.PercentageOfIdealWeight = percentageOfIdealWeight;
 
-            result.StepsByStatus = activityInfo.Steps.Select(s => AnalyzeSteps(s.Value))
+            result.StepsByStatus = steps.Select(s => AnalyzeSteps(s.Value))
                 .GroupBy(a => a.Status)
                 .ToDictionary(g => g.First(), g => g.Count());
+
+            result.Recommendations = _suggestProcessor.GetRecommendations(activityInfo.Goal, result.MarkActivity.Status);
 
             return result;
         }

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace SportCompanion.Core.Models
+namespace SportCompanion.Core.Models.Apple
 {
-    public class AppleStepInfo : StepInfo
+    public class AppleRecordInfo
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

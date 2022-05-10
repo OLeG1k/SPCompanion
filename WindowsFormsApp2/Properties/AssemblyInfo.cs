@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Сравнение физической активности человека")]
-[assembly: AssemblyCopyright("Copyright Олег Иванов ©  2020")]
+[assembly: AssemblyCopyright("Copyright Олег Иванов ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
